@@ -145,17 +145,23 @@ class Db
 
 	public function getAll()
 	{
-		$sql = "SELECT * FROM articulos;";
+		$sql = "SELECT * FROM Usuario;";
 		$q = mysqli_query($this->mysql, $sql);
 		$result = array();
 		while ($row = mysqli_fetch_array($q)) {
 			$result[] = array(
-				'id' => $row['id'],
-				'CveArt' => $row['CveArt'],
-				'Descripcion' => $row['Descripcion'],
-				'Precio' => $row['Precio'],
-				'IVA' => $row['IVA'],
-				'Descuento' => $row['Descuento']
+				'Id' => $row['ID_Usuario'],
+				'Nombre' => $row['Nombre'],
+				'PrimerApellido' => $row['Primer_Apellido'],
+				'SegundoApellido' => $row['Segundo_Apellido'],
+				'Correo' => $row['Correo'],
+				'FechaNacimiento' => $row['Fecha_Nacimiento'],
+				'Estado' => $row['Estado'],
+				'Localidad' => $row['Localidad'],
+				'Colonia' => $row['Colonia'],
+				'Calle' => $row['Calle'],
+				'NumeroDomicilio' => $row['Numero_Domicilio'],
+				'NumeroAfiliado' => $row['Numero_Afiliado']
 			);
 		}
 		mysqli_close($this->mysql);
@@ -164,7 +170,7 @@ class Db
 
 	public function getById($id)
 	{
-		$sql = "SELECT * FROM articulos WHERE id=$id";
+		$sql = "SELECT * FROM Usuario WHERE id=$id";
 
 		$q = mysqli_query($this->mysql, $sql);
 
@@ -173,16 +179,35 @@ class Db
 		while ($row = mysqli_fetch_array($q)) {
 
 			$result[] = array(
-				'id' => $row['id'],
-				'CveArt' => $row['CveArt'],
-				'Descripcion' => $row['Descripcion'],
-				'Precio' => $row['Precio'],
-				'IVA' => $row['IVA'],
-				'Descuento' => $row['Descuento'],
+				'Id' => $row['ID_Usuario'],
+				'Nombre' => $row['Nombre'],
+				'PrimerApellido' => $row['Primer_Apellido'],
+				'SegundoApellido' => $row['Segundo_Apellido'],
+				'Correo' => $row['Correo'],
+				'FechaNacimiento' => $row['Fecha_Nacimiento'],
+				'Estado' => $row['Estado'],
+				'Localidad' => $row['Localidad'],
+				'Colonia' => $row['Colonia'],
+				'Calle' => $row['Calle'],
+				'NumeroDomicilio' => $row['Numero_Domicilio'],
+				'NumeroAfiliado' => $row['Numero_Afiliado']
 			);
 		}
 		mysqli_close($this->mysql);
 		return $result[0];
+    }
+
+	public function getByEmail($datos)
+	{
+        $datos = json_decode($datos);
+        $email = $datos->Correo;
+		$sql = "SELECT ID_Usuario as Id, Nombre, Primer_Apellido as PrimerApellido, Segundo_Apellido as SegundoApellido, Correo, Fecha_Nacimiento as FechaNacimiento, Estado, Localidad, Colonia, Calle, 
+        Numero_Domicilio as NumeroDomicilio, Numero_Afiliado as NumeroAfiliado, ClaveApi FROM Usuario WHERE Correo='$email'";
+		$q = mysqli_query($this->mysql, $sql);
+		$result = array();
+        $result= mysqli_fetch_assoc($q);
+		mysqli_close($this->mysql);
+		return $result;
     }
 
     private function encriptarContrasena($contrasenaPlana) {

@@ -9,7 +9,20 @@ class usuarios
     $db = new Db();
 
     $res = $db->getAll();
-    return $res;
+    $xml = new SimpleXMLElement('<usuarios/>');
+    $this->toXml($xml, $res);
+    return $xml->asXML();
+  }
+  
+  public function getByEmail($email)
+  {
+    $db = new Db();
+
+    $res = $db->getByEmail($email);
+    $xml = new SimpleXMLElement('<usuario/>');
+    $this->toXml($xml, $res);
+    return $xml->asXML();
+    // return $res;
   }
 
   public function insert($datos)
@@ -17,7 +30,9 @@ class usuarios
     $db = new Db();
 
     $res = $db->insert($datos);
-    return $res;
+    $xml = new SimpleXMLElement('<data/>');
+    $this->toXml($xml, $res);
+    return $xml->asXML();
   }
 
   public function login($datos)
@@ -27,7 +42,8 @@ class usuarios
     $res = $db->login($datos);
     return $res;
   }
-  public function delete($id){
+  public function delete($id)
+  {
 
     $db = new DB();
 
@@ -36,13 +52,31 @@ class usuarios
     return $res;
   }
 
-  public function update($datos){
+  public function update($datos)
+  {
     $db = new DB();
-    $res= $db->update($datos);
+    $res = $db->update($datos);
     return $res;
   }
-  
-  
+
+  private function toXml(SimpleXMLElement $object, array $data)
+  {
+    foreach ($data as $key => $value) {
+      if (is_array($value)) {
+        if ($key == (int)$key) {
+          $key = "i_$key";
+        }
+        $new_object = $object->addChild($key);
+        $this->toXml($new_object, $value);
+      } else {
+        if ($key == (int)$key) {
+          $key = "$key";
+        }
+
+        $object->addChild($key, $value);
+      }
+    }
+  }
 }
 
 $params = array("uri" => "http://localhost/soap/usuariosSOAP.php");
