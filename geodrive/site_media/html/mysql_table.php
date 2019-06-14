@@ -1,5 +1,5 @@
 <?php
-require('../fpdf/fpdf.php');
+require('./../fpdf/fpdf.php');
 
 class PDF_MySQL_Table extends FPDF
 {
@@ -19,7 +19,7 @@ function Header()
 
 function TableHeader()
 {
-	$this->SetFont('Arial','B',12);
+	$this->SetFont('Arial','B',10);
 	$this->SetX($this->TableX);
 	$fill=!empty($this->HeaderColor);
 	if($fill)

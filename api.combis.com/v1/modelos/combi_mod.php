@@ -47,9 +47,9 @@ class combi
         }
     }
 
-    private function crear($datosCombi) {
-        $numeroCobi = $datosCombi->Numero_Combi;
-        $placas = $datosCombi->Placas;
+    private function crear($datosHC) {
+        $numeroCobi = $datosHC->Numero_Combi;
+        $placas = $datosHC->Placas;
         try {
 
             $pdo = ConexionBD::obtenerInstancia()->obtenerBD();

@@ -105,15 +105,7 @@
         </div>
     </div>
 
-    <div class="form-group has-warning has-feedback">
-        <label class="col-sm-2 control-label">Numero afiliado</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="NumeroAfiliado" placeholder="Numero Afiliado">
-            <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
-        </div>
-    </div>
-
-        <div class="form-group has-warning has-feedback" data-validate = "Valid email is required: ex@abc.xyz">
+    <div class="form-group has-warning has-feedback" data-validate = "Valid email is required: ex@abc.xyz">
         <label class="col-sm-2 control-label">Correo</label>
         <div class="col-sm-10">
             <input type="text" class="form-control"  id="Correo" placeholder="Correo" required>
@@ -143,7 +135,6 @@ var from= {
     Colonia: $('#Colonia').val(),
     Calle: $('#Calle').val(),
     NumeroDomicilio: $('#NumeroDomicilio').val(),
-    NumeroAfiliado: $('#NumeroAfiliado').val(),
     Correo: $('#Correo').val(),
     Contrasena: $('#Contrasena').val()
 };
@@ -153,7 +144,7 @@ var xhttp = new XMLHttpRequest();
 				if (this.readyState == 4 && this.status == 200) {
 				}
 			};
-			xhttp.open("POST", "http://192.168.1.67/api.combis.com/v1/usuarios/registro", true);
+			xhttp.open("POST", "http://localhost/api.combis.com/v1/usuarios/registro", true);
 			xhttp.send(JSON.stringify(from));
 
 

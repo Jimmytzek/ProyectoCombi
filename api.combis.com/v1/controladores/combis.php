@@ -179,7 +179,7 @@ class combis
         $sentencia = ConexionBD::obtenerInstancia()->obtenerBD()->prepare($comando);
 
         if ($sentencia->execute()) {
-            $resultado = $sentencia->fetch();
+            $resultado = $sentencia->fetchAll(PDO::FETCH_ASSOC);
             return $resultado;
         } else
             return null;

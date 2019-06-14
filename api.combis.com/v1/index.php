@@ -2,9 +2,11 @@
 
 require 'controladores/usuarios.php';
 require 'controladores/contactos.php';
+require 'controladores/historialChofer.php';
 require 'vistas/VistaXML.php';
 require 'vistas/VistaJson.php';
 require 'utilidades/ExcepcionApi.php';
+require 'controladores/combis.php';
 
 // Constantes de estado
 const ESTADO_URL_INCORRECTA = 2;
@@ -47,7 +49,7 @@ else
 
 // Obtener recurso
 $recurso = array_shift($peticion);
-$recursos_existentes = array('contactos', 'usuarios');
+$recursos_existentes = array('contactos', 'usuarios', 'combis', 'historialChofer');
 
 // Comprobar si existe el recurso
 if (!in_array($recurso, $recursos_existentes)) {

@@ -106,7 +106,7 @@
 					window.location="usuario_index.php";
 				}
 			};
-			xhttp.open("POST", "http://192.168.1.67/api.combis.com/v1/usuarios/login", true);
+			xhttp.open("POST", "http://localhost/api.combis.com/v1/usuarios/login", true);
 			xhttp.send(JSON.stringify(datos));
 			// $.post("http://192.168.1.67/api.combis.com/v1/usuarios/login/", 
 			// { json_string:JSON.stringify(json) }, (d) => {

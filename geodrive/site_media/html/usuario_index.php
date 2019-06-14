@@ -10,8 +10,8 @@
 <body>
 
 <ul>
-  <li><a class="active" href="#">insertar</a></li>
-  <li><a href="">actualizar</a></li>
+  <li><a class="active" href="#">Usuarios</a></li>
+  <li><a href="combi_index.php">Combis</a></li>
   <li><a href="">Eliminar</a></li>
 </ul>
 
