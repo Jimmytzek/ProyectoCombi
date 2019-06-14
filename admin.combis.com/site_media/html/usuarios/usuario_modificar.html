@@ -1,0 +1,112 @@
+<!-- <form id="alta_usuario" action="{EDIT}" method="POST">
+    <div class="item_requerid">E-mail</div>
+    <div class="form_requerid"><input type="text" name="email" id="email" value="{email}" readonly></div>
+    <div class="item_requerid">Nombre</div>
+    <div class="form_requerid"><input type="text" name="nombre" id="nombre" value="{nombre}"></div>
+    <div class="item_requerid">Apellido</div>
+    <div class="form_requerid"><input type="text" name="apellido" id="apellido" value="{apellido}"></div>
+    <div class="form_button"><input type="submit" name="enviar" id="enviar" value="Guardar"></div>
+</form> -->
+
+<form id="alta_usuario" action="{EDIT}" method="POST" class="form-horizontal">
+
+    <div class="form-group has-warning has-feedback" data-validate="es requerido">
+        <label class="col-sm-2 control-label">Nombre</label>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" name="Nombre" placeholder="Nombre" value="{Nombre}" required>
+            <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+        </div>
+    </div>
+
+    <div class="form-group has-warning has-feedback" data-validate="es requerido">
+        <label class="col-sm-2 control-label">Primer Apellido</label>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" name="PrimerApellido" value="{PrimerApellido}"  placeholder="Primer Apellido" required>
+            <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+        </div>
+    </div>
+
+    <div class="form-group has-warning has-feedback">
+        <label class="col-sm-2 control-label">Segundo Apellido</label>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" name="SegundoApellido" value="{SegundoApellido}" placeholder="Segundo Apellido">
+            <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+        </div>
+    </div>
+
+    <div class="form-group has-warning has-feedback">
+        <label class="col-sm-2 control-label">Fecha de nacimiento</label>
+        <div class="col-sm-10">
+            <input type="date" class="form-control" name="FechaNacimiento" value="{FechaNacimiento}" placeholder="Fecha Nacimiento">
+            <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+        </div>
+    </div>
+
+    <div class="form-group has-warning has-feedback">
+        <label class="col-sm-2 control-label">Estado</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="Estado" value="{Estado}" placeholder="Estado">
+            <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+        </div>
+    </div>
+
+    <div class="form-group has-warning has-feedback">
+        <label class="col-sm-2 control-label">Localidad</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="Localidad" value="{Localidad}" placeholder="Localidad">
+            <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+        </div>
+    </div>
+
+    <div class="form-group has-warning has-feedback">
+        <label class="col-sm-2 control-label">Colonia</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="Colonia" value="{Colonia}" placeholder="Colonia">
+            <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+        </div>
+    </div>
+
+    <div class="form-group has-warning has-feedback">
+        <label class="col-sm-2 control-label">Calle</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="Calle" value="{Calle}" placeholder="Calle">
+            <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+        </div>
+    </div>
+
+    <div class="form-group has-warning has-feedback">
+        <label class="col-sm-2 control-label">Numero domicilio</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="NumeroDomicilio" value="{NumeroDomicilio}" placeholder=" Numero Domicilio">
+            <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+        </div>
+    </div>
+
+    <div class="form-group has-warning has-feedback">
+        <label class="col-sm-2 control-label">Numero afiliado</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="NumeroAfiliado" value="{NumeroAfiliado}" placeholder="Numero Afiliado">
+            <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+        </div>
+    </div>
+
+    <div class="form-group has-warning has-feedback" data-validate="Valid email is required: ex@abc.xyz">
+        <label class="col-sm-2 control-label">Correo</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="Correo" placeholder="Correo" value="{Correo}" required>
+            <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+        </div>
+    </div>
+
+    <div class="form-group has-warning has-feedback" data-validate="Password is required">
+        <label class="col-sm-2 control-label">Contraseña</label>
+        <div class="col-sm-10">
+            <input type="password" class="form-control" name="Contrasena" value="{Contrasena}" placeholder="Contraseña" required>
+            <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="container-login100-form-btn">
+        <button type="submit" class="btn btn-primary">Registrar</button>
+    </div>
+
+</form>
