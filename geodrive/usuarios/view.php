@@ -17,10 +17,10 @@ $diccionario = array(
     ),
 
     'form_actions'=>array(
-        'SET'=>'/mvc/'.MODULO.SET_USER.'/',
-        'GET'=>'/mvc/'.MODULO.GET_USER.'/',
-        'DELETE'=>'/mvc/'.MODULO.DELETE_USER.'/',
-        'EDIT'=>'/mvc/'.MODULO.EDIT_USER.'/',
+        'SET'=>'/'.MODULO.SET_USER.'/',
+        'GET'=>'/'.MODULO.GET_USER.'/',
+        'DELETE'=>'/'.MODULO.DELETE_USER.'/',
+        'EDIT'=>'/'.MODULO.EDIT_USER.'/',
         'ADD_USR'=>'/api.peopleapp.com/express/'.MODULO.ADD_USER.'/'
     )
 );

@@ -59,6 +59,29 @@ class usuarios
         }
     }
 
+    public static function get($peticion){
+        if($peticion[0] == 'verUsuarios'){
+            return self::obtenerUsuarios();
+        }else {
+            throw new ExcepcionApi(self::ESTADO_URL_INCORRECTA, "Url mal formada", 400);
+        }
+    }
+
+
+    private function obtenerUsuarios()
+    {
+        $comando = "SELECT *" .
+            " FROM " . self::NOMBRE_TABLA ;
+
+        $sentencia = ConexionBD::obtenerInstancia()->obtenerBD()->prepare($comando);
+
+        if ($sentencia->execute()) {
+            $resultado = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+            return $resultado;
+        } else
+            return null;
+    }
+
 
     /**
      * Crea un nuevo usuario en la base de datos
@@ -454,7 +477,7 @@ class usuarios
     }
 
     private function deleteUser($datosUsuario){
-        $userId = $datosUsuario->Id;
+        $userId = $datosUsuario->ID_Usuario;
         try {
 
             $pdo = ConexionBD::obtenerInstancia()->obtenerBD();

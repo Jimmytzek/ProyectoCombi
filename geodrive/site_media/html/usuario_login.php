@@ -23,6 +23,18 @@
 </head>
 <body>
 	
+<?php
+
+function redi(){
+ session_start();
+ $_SESSION['sesion'] = '1'; 
+}
+
+echo $_SESSION['sesion']
+
+
+?>
+
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
@@ -103,39 +115,17 @@
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
+					var variable="<? echo redi() ?>";
+					document.write(variable);
 					window.location="usuario_index.php";
 				}
 			};
 			xhttp.open("POST", "http://localhost/api.combis.com/v1/usuarios/login", true);
 			xhttp.send(JSON.stringify(datos));
-			// $.post("http://192.168.1.67/api.combis.com/v1/usuarios/login/", 
-			// { json_string:JSON.stringify(json) }, (d) => {
-			// 	console.log(d);
-			// });
-			// $.ajax({
-			// 	method: "POST",
-			// 	url: "http://localhost/api.combis.com/v1/usuarios/login/",
-			// 	data: json,
-    		// 	contentType: 'application/json',
-			// 	success: function(data){
-			// 		console.log("device control succeeded");
-			// 	},
-			// 	error: function(data){
-			// 		console.log("Device control failed");
-			// 	}
-			// })
-			// .done(function( msg ) {
-			// 	alert( "Data Saved: " + msg );
-			// }).fail(function( jqXHR, textStatus, x ) {
-			// 	alert( "Request failed: " + textStatus );
-			// });
 		}
+
+
 	</script>
 <!--===============================================================================================-->
-
-	<?php
-	
-	?>
-
 </body>
 </html>

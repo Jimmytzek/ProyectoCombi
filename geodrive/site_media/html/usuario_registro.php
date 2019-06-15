@@ -150,12 +150,19 @@ var xhttp = new XMLHttpRequest();
 
 }
 
+$(document).ready(function() {
+        $('#refresh').click(function() {
+            // Recargo la página
+            location.reload();
+        });
+    });
+
 
 </script>
 
 
     <div class="container-login100-form-btn">
-    <button type="button" class="btn btn-primary" onclick="registro()" >Registrar</button>
+    <button type="button" class="btn btn-primary" onclick="registro()" id="refresh">Registrar</button>
     </div>
 
     </form>
