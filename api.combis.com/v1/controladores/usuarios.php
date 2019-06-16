@@ -9,7 +9,7 @@ class usuarios
     // Campos de la tabla
     const ID_USUARIO = "ID_Usuario";
     const TIPO_USUARIO = "Tipo_Usuario";
-    const NOMBRE = "nombre";
+    const NOMBRE = "Nombre";
     const PRIMER_APELLIDO = "Primer_Apellido";
     const SEGUNDO_APELLIDO = "Segundo_Apellido";
     const FECHA_NACIMIENTO = "Fecha_Nacimiento";
@@ -44,7 +44,7 @@ class usuarios
     }
 
     public static function put($peticion){
-        if($peticion[0] == 'actualizar'){
+        if($peticion[0] == 'update'){
             return self::actualizar();
         }else {
             throw new ExcepcionApi(self::ESTADO_URL_INCORRECTA, "Url mal formada", 400);
@@ -172,19 +172,18 @@ class usuarios
     private function crear($datosUsuario)
     {
         $nombre = $datosUsuario->Nombre;
-        $apellido1 = $datosUsuario->PrimerApellido;
-        $apellido2 = $datosUsuario->SegundoApellido;
+        $apellido1 = $datosUsuario->Primer_Apellido;
+        $apellido2 = $datosUsuario->Segundo_Apellido;
         $contrasena = $datosUsuario->Contrasena;
         $contrasenaEncriptada = self::encriptarContrasena($contrasena);
         $correo = $datosUsuario->Correo;
         $claveApi = self::generarClaveApi();
-        $fechaNac = $datosUsuario->FechaNacimiento;
+        $fechaNac = $datosUsuario->Fecha_Nacimiento;
         $estado = $datosUsuario->Estado;
         $localidad = $datosUsuario->Localidad;
         $colonia = $datosUsuario->Colonia;
         $calle = $datosUsuario->Calle;
-        $numCasa = $datosUsuario->NumeroDomicilio;
-        $numAfiliado = $datosUsuario->NumeroAfiliado;
+        $numCasa = $datosUsuario->Numero_Domicilio;
 
         try {
 
@@ -202,10 +201,9 @@ class usuarios
                 self::LOCALIDAD . "," .
                 self::COLONIA . "," .
                 self::CALLE . "," .
-                self::NUMERO_DOMICILIO . "," .
-                self::NUMERO_AFILIADO . "," .
+                self::NUMERO_DOMICILIO . "," . 
                 self::CLAVE_API . ")" .
-                " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                " VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
 
             $sentencia = $pdo->prepare($comando);
 
@@ -219,9 +217,8 @@ class usuarios
             $sentencia->bindParam(8, $localidad);
             $sentencia->bindParam(9, $colonia);
             $sentencia->bindParam(10, $calle);
-            $sentencia->bindParam(11, $numCasa);
-            $sentencia->bindParam(12, $numAfiliado);
-            $sentencia->bindParam(13, $claveApi);
+            $sentencia->bindParam(11, $numCasa); 
+            $sentencia->bindParam(12, $claveApi);
 
             $resultado = $sentencia->execute();
 
@@ -413,20 +410,20 @@ class usuarios
     }
 
     private function update($datosUsuario){
-        $id = $datosUsuario->Id;
+        
         $nombre = $datosUsuario->Nombre;
-        $apellido1 = $datosUsuario->PrimerApellido;
-        $apellido2 = $datosUsuario->SegundoApellido;
-        $contrasena = $datosUsuario->Contrasena;
-        $contrasenaEncriptada = self::encriptarContrasena($contrasena);
-        $correo = $datosUsuario->Correo;
-        $fechaNac = $datosUsuario->FechaNacimiento;
+        $apellido1 = $datosUsuario->Primer_Apellido;
+        $apellido2 = $datosUsuario->Segundo_Apellido; 
+        $fechaNac = $datosUsuario->Fecha_Nacimiento;
         $estado = $datosUsuario->Estado;
         $localidad = $datosUsuario->Localidad;
         $colonia = $datosUsuario->Colonia;
         $calle = $datosUsuario->Calle;
-        $numCasa = $datosUsuario->NumeroDomicilio;
-        $numAfiliado = $datosUsuario->NumeroAfiliado;
+        $numCasa = $datosUsuario->Numero_Domicilio;
+        $contrasena = $datosUsuario->Contrasena;
+        $contrasenaEncriptada = self::encriptarContrasena($contrasena);
+        $correo = $datosUsuario->Correo; 
+        $id = $datosUsuario->ID_Usuario;
 
         try {
 
@@ -437,32 +434,30 @@ class usuarios
                 self::NOMBRE . "=?," .
                 self::PRIMER_APELLIDO . "=?," .
                 self::SEGUNDO_APELLIDO . "=?," .
-                self::CORREO . "=?," .
-                self::CONTRASENA . "=?," .
                 self::FECHA_NACIMIENTO . "=?," .
                 self::ESTADO . "=?," .
                 self::LOCALIDAD . "=?," .
                 self::COLONIA . "=?," .
                 self::CALLE . "=?," .
                 self::NUMERO_DOMICILIO . "=?," .
-                self::NUMERO_AFILIADO . "=? WHERE " . 
-                self::ID_USUARIO . " = ?";
+                self::CORREO . "=?," .
+                self::CONTRASENA . "=?  WHERE " . 
+                self::ID_USUARIO . " = ? ";
 
             $sentencia = $pdo->prepare($comando);
 
             $sentencia->bindParam(1, $nombre);
             $sentencia->bindParam(2, $apellido1);
-            $sentencia->bindParam(3, $apellido2);
-            $sentencia->bindParam(4, $correo);
-            $sentencia->bindParam(5, $contrasenaEncriptada);
-            $sentencia->bindParam(6, $fechaNac);
-            $sentencia->bindParam(7, $estado);
-            $sentencia->bindParam(8, $localidad);
-            $sentencia->bindParam(9, $colonia);
-            $sentencia->bindParam(10, $calle);
-            $sentencia->bindParam(11, $numCasa);
-            $sentencia->bindParam(12, $numAfiliado);
-            $sentencia->bindParam(13, $id);
+            $sentencia->bindParam(3, $apellido2); 
+            $sentencia->bindParam(4, $fechaNac);
+            $sentencia->bindParam(5, $estado);
+            $sentencia->bindParam(6, $localidad);
+            $sentencia->bindParam(7, $colonia);
+            $sentencia->bindParam(8, $calle);
+            $sentencia->bindParam(9, $numCasa);
+            $sentencia->bindParam(10, $correo);
+            $sentencia->bindParam(11, $contrasenaEncriptada); 
+            $sentencia->bindParam(12, $id);
 
             $resultado = $sentencia->execute();
 

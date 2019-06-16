@@ -53,7 +53,7 @@ if (!isset($_SESSION['sesion'])) {
     </div>
 
     <div class="container-login100-form-btn">
-    <button type="button" class="btn btn-primary" onclick="del()" id="refresh" >borrar</button>
+    <button type="button" class="btn btn-primary" onclick="del()" >borrar</button>
     </div>
 
     </form>
@@ -84,6 +84,8 @@ var from= {
 var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
+                    alert('Usuario Eliminado');  
+                    window.location="usuario_del.php";
 				}
 			};
 			xhttp.open("DELETE", "http://localhost/api.combis.com/v1/usuarios/borrar", true);
@@ -93,12 +95,12 @@ var xhttp = new XMLHttpRequest();
 }
 
 
-$(document).ready(function() {
-        $('#refresh').click(function() {
-            // Recargo la página
-            location.reload();
-        });
-    });
+// $(document).ready(function() {
+//         $('#refresh').click(function() {
+//             // Recargo la página
+//             location.reload();
+//         });
+//     });
 
 
 </script>
