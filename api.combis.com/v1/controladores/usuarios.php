@@ -31,15 +31,6 @@ class usuarios
     const ESTADO_URL_INCORRECTA = 6;
     const ESTADO_FALLA_DESCONOCIDA = 7;
     const ESTADO_PARAMETROS_INCORRECTOS = 8;
-    
-    public static function get($peticion)
-    {
-        if ($peticion[0] == 'ubicacioncombis') {
-            return self::getUbicacionCombis();
-        } else {
-            throw new ExcepcionApi(self::ESTADO_URL_INCORRECTA, "Url mal formada", 400);
-        }
-    }
 
     public static function post($peticion)
     {
@@ -68,15 +59,86 @@ class usuarios
         }
     }
 
-    private function getUbicacionCombis()
-    {
-        $resultado = self::obtenerUbicacionCombis();
-        return
-            [
-                "estado" => self::ESTADO_CREACION_EXITOSA,
-                "datos" => $resultado
-            ];
+    public static function get($peticion){
+        if($peticion[0] == 'verUsuarios'){
+            return self::obtenerUsuarios();
+        } else if($peticion[0] == 'recuve'){
+            return self::recuperar();
+        } else {
+            throw new ExcepcionApi(self::ESTADO_URL_INCORRECTA, "Url mal formada", 400);
+        }
     }
+
+
+    private function obtenerUsuarios()
+    {
+        $comando = "SELECT *" .
+            " FROM " . self::NOMBRE_TABLA ;
+
+        $sentencia = ConexionBD::obtenerInstancia()->obtenerBD()->prepare($comando);
+
+        if ($sentencia->execute()) {
+            $resultado = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+            return $resultado;
+        } else
+            return null;
+    }
+
+
+    private function recuperar()
+    {
+        $cuerpo = file_get_contents('php://input');
+        $usuario = json_decode($cuerpo);
+
+        $resultado = self::verificar($usuario);
+
+        switch ($resultado) {
+            case self::ESTADO_CREACION_EXITOSA:
+                http_response_code(200);
+                return
+                    [
+                        "estado" => self::ESTADO_CREACION_EXITOSA,
+                        "mensaje" => utf8_encode("se ha recupado")
+                    ];
+                break;
+            case self::ESTADO_CREACION_FALLIDA:
+                throw new ExcepcionApi(self::ESTADO_CREACION_FALLIDA, "Ha ocurrido un error");
+                break;
+            default:
+                throw new ExcepcionApi(self::ESTADO_FALLA_DESCONOCIDA, "Falla desconocida", 400);
+        }
+    }
+
+
+    private function verificar($datosUsuario) 
+    {
+
+        $correo = $datosUsuario->Correo;
+       
+
+        try {
+
+            $pdo = ConexionBD::obtenerInstancia()->obtenerBD();
+
+            $comando = "SELECT Contrasena FROM " . self::NOMBRE_TABLA .
+            " WHERE " . self::CORREO . "=?";
+
+            $sentencia = $pdo->prepare($comando);
+
+            $sentencia->bindParam(1, $correo); 
+ 
+            $resultado = $sentencia->execute();
+
+            if ($resultado) {
+                return self::ESTADO_CREACION_EXITOSA;
+            } else {
+                return self::ESTADO_CREACION_FALLIDA;
+            }
+        } catch (PDOException $e) {
+            throw new ExcepcionApi(self::ESTADO_ERROR_BD, $e->getMessage());
+        }
+    }
+
 
     /**
      * Crea un nuevo usuario en la base de datos
@@ -404,19 +466,6 @@ class usuarios
             return null;
     }
 
-    private function obtenerUbicacionCombis()
-    {
-        $comando = "select c.Numero_Combi, c.Placas, u.Latitud, u.Longitud, u.Hora from combi as c inner join Ubicacion as u on c.ID_Combi = u.ID_Combi";
-
-        $sentencia = ConexionBD::obtenerInstancia()->obtenerBD()->prepare($comando);
-
-        if ($sentencia->execute()) {
-            $resultado = $sentencia->fetchAll(PDO::FETCH_ASSOC);
-            return $resultado;
-        } else
-            return null;
-    }
-
     private function update($datosUsuario){
         
         $nombre = $datosUsuario->Nombre;
@@ -480,7 +529,7 @@ class usuarios
     }
 
     private function deleteUser($datosUsuario){
-        $userId = $datosUsuario->Id;
+        $userId = $datosUsuario->ID_Usuario;
         try {
 
             $pdo = ConexionBD::obtenerInstancia()->obtenerBD();
