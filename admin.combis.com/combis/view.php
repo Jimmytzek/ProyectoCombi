@@ -13,10 +13,10 @@ $diccionario = array(
         'VIEW_DELETE_COMBI' => MODULO_COMBI . VIEW_DELETE_COMBI . '/'
     ),
     'form_actions' => array(
-        'SET' => '/mvc/poo/combis/' . MODULO_COMBI . SET_COMBI . '/',
-        'GET' => '/mvc/poo/combis/' . MODULO_COMBI . GET_COMBI . '/',
-        'DELETE' => '/mvc/poo/combis/' . MODULO_COMBI . DELETE_COMBI . '/',
-        'EDIT' => '/mvc/poo/' . MODULO_COMBI . EDIT_COMBI . '/'
+        'SET' => '/mvc/admin.combis.com/combis/' . MODULO_COMBI . SET_COMBI . '/',
+        'GET' => '/mvc/admin.combis.com/combis/' . MODULO_COMBI . GET_COMBI . '/',
+        'DELETE' => '/mvc/admin.combis.com/combis/' . MODULO_COMBI . DELETE_COMBI . '/',
+        'EDIT' => '/mvc/admin.combis.com/' . MODULO_COMBI . EDIT_COMBI . '/'
     )
 );
 function get_template($form = 'get')

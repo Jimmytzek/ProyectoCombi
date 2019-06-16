@@ -1,15 +1,6 @@
-<!-- <form id="alta_usuario" action="{EDIT}" method="POST">
-    <div class="item_requerid">E-mail</div>
-    <div class="form_requerid"><input type="text" name="email" id="email" value="{email}" readonly></div>
-    <div class="item_requerid">Nombre</div>
-    <div class="form_requerid"><input type="text" name="nombre" id="nombre" value="{nombre}"></div>
-    <div class="item_requerid">Apellido</div>
-    <div class="form_requerid"><input type="text" name="apellido" id="apellido" value="{apellido}"></div>
-    <div class="form_button"><input type="submit" name="enviar" id="enviar" value="Guardar"></div>
-</form> -->
-
 <form id="alta_usuario" action="{EDIT}" method="POST" class="form-horizontal">
 
+    <input type="hidden" name="Id" value="{Id}">
     <div class="form-group has-warning has-feedback" data-validate="es requerido">
         <label class="col-sm-2 control-label">Nombre</label>
         <div class="col-sm-10">
@@ -98,15 +89,15 @@
         </div>
     </div>
 
-    <div class="form-group has-warning has-feedback" data-validate="Password is required">
+    <!-- <div class="form-group has-warning has-feedback" data-validate="Password is required">
         <label class="col-sm-2 control-label">Contraseña</label>
         <div class="col-sm-10">
             <input type="password" class="form-control" name="Contrasena" value="{Contrasena}" placeholder="Contraseña" required>
             <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
         </div>
-    </div>
-    <div class="container-login100-form-btn">
-        <button type="submit" class="btn btn-primary">Registrar</button>
+    </div> -->
+    <div >
+        <button type="submit" class="btn btn-primary col-md-4 col-md-offset-4">Modificar</button>
     </div>
 
 </form>

@@ -5,7 +5,8 @@ $diccionario = array(
         VIEW_GET_USER => 'Buscar usuario',
         VIEW_DELETE_USER => 'Eliminar un usuario',
         VIEW_EDIT_USER => 'Modificar usuario',
-        VIEW_REPORT_USER => 'Obtener reporte'
+        VIEW_REPORT_USER => 'Obtener reporte',
+        VIEW_LOGOUT_USER => 'Cerrar sesión'
     ),
     'links_menu' => array(
         'VIEW_SET_USER' => MODULO . VIEW_SET_USER . '/',
@@ -13,13 +14,15 @@ $diccionario = array(
         'VIEW_EDIT_USER' => MODULO . VIEW_EDIT_USER . '/',
         'VIEW_DELETE_USER' => MODULO . VIEW_DELETE_USER . '/',
         'VIEW_REPORT_USER' => MODULO . VIEW_REPORT_USER . '/',
+        'VIEW_LOGOUT_USER' => MODULO . VIEW_LOGOUT_USER . '/',
     ),
     'form_actions' => array(
-        'SET' => '/mvc/poo/' . MODULO . SET_USER . '/',
-        'GET' => '/mvc/poo/' . MODULO . GET_USER . '/',
-        'DELETE' => '/mvc/poo/' . MODULO . DELETE_USER . '/',
-        'EDIT' => '/mvc/poo/' . MODULO . EDIT_USER . '/',
-        'REPORT' => '/mvc/poo/' . MODULO . REPORT_USER . '/'
+        'SET' => '/mvc/admin.combis.com/' . MODULO . SET_USER . '/',
+        'GET' => '/mvc/admin.combis.com/' . MODULO . GET_USER . '/',
+        'DELETE' => '/mvc/admin.combis.com/' . MODULO . DELETE_USER . '/',
+        'EDIT' => '/mvc/admin.combis.com/' . MODULO . EDIT_USER . '/',
+        'REPORT' => '/mvc/admin.combis.com/' . MODULO . REPORT_USER . '/',
+        'LOGOUT' => '/mvc/admin.combis.com/' . MODULO . LOGOUT_USER . '/'
     )
 );
 function get_template($form = 'get')
@@ -54,10 +57,16 @@ function retornar_vista($vista, $data = array())
         array_key_exists('Id', $data) &&
         $vista == VIEW_EDIT_USER
     ) {
-        $mensaje = 'Editar usuario ' . $data['Nombre'] . ' ' . $data['PrimerApellido'];
+        $mensaje = 'Editar usuario "' . $data['Nombre'] . ' ' . $data['PrimerApellido']. '"';
     } else if( $vista == VIEW_REPORT_USER){
         $mensaje = 'Reporte';
-    } else {
+    } else if ( $vista == VIEW_GET_USER ){
+        if (array_key_exists('mensaje', $data)) {
+            $mensaje = $data['mensaje'];
+        } else {
+            $mensaje = 'Introduzca el email para buscar al usuario';
+        }
+    }else{
         if (array_key_exists('mensaje', $data)) {
             $mensaje = $data['mensaje'];
         } else {

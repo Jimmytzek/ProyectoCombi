@@ -39,10 +39,10 @@ body {
 
 #mensaje {
     margin: 20px;
-    border: 1px solid #903;
-    background-color: #f4f4f4;
+    border: 1px solid green;
+    background-color: green;
+    color: white;
     padding: 8px;
-    color: #903;
     font-size: 15px;
     font-weight: 700;
     text-align: justify
