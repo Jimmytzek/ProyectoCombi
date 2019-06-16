@@ -1,7 +1,10 @@
 <?php
+session_start();
 require_once('constants.php');
 require_once('model.php');
 require_once('view.php');
+require_once('../reportes.php');
+include_once('../httpful/httpful.phar');
 function handler()
 {
     $event = VIEW_GET_USER;
@@ -9,7 +12,7 @@ function handler()
     $peticiones = array(
         SET_USER, GET_USER, DELETE_USER, EDIT_USER,
         VIEW_SET_USER, VIEW_GET_USER, VIEW_DELETE_USER,
-        VIEW_EDIT_USER, VIEW_REPORT_USER
+        VIEW_EDIT_USER, VIEW_REPORT_USER, LOGOUT_USER
     );
     foreach ($peticiones as $peticion) {
         $uri_peticion = MODULO . $peticion . '/';
@@ -37,13 +40,12 @@ function handler()
                 'SegundoApellido' => $vals[4]['value'],
                 'FechaNacimiento' => $vals[6]['value'],
                 'Correo' => $vals[5]['value'],
-                'Contrasena' => $vals[]['value'],
-                'Localidad' => $vals[1]['value'],
-                'Estado' => $vals[1]['value'],
-                'Colonia' => $vals[1]['value'],
-                'NumeroDomicilio' => $vals[1]['value'],
-                'Calle' => $vals[1]['value'],
-                'NumeroAfiliado' => $vals[1]['value']
+                'Localidad' => $vals[8]['value'],
+                'Estado' => $vals[7]['value'],
+                'Colonia' => $vals[9]['value'],
+                'NumeroDomicilio' => $vals[11]['value'],
+                'Calle' => $vals[10]['value'],
+                'NumeroAfiliado' => $vals[12]['value']
             );
             retornar_vista(VIEW_EDIT_USER, $data);
             break;
@@ -53,14 +55,52 @@ function handler()
             retornar_vista(VIEW_DELETE_USER, $data);
             break;
         case EDIT_USER:
-            $usuario->edit($user_data);
-            $data = array('mensaje' => $usuario->mensaje);
+            $res = $usuario->update(json_encode($user_data));
+            $data = array('mensaje' => $res['mensaje']);
             retornar_vista(VIEW_GET_USER, $data);
+            break;
+        case REPORT_USER:
+
+            if(empty($user_data))
+                retornar_vista(VIEW_REPORT_USER);
+            else{
+                $url = "http://localhost/api.combis.com/v1/usuarios/ubicacioncombis";
+
+                $opciones = array('http' =>
+                    array(
+                        'method' => 'GET',
+                        'max_redirects' => '0',
+                        'ignore_errors' => '1'
+                    )
+                );
+
+                $contexto = stream_context_create($opciones);
+                $flujo = fopen($url, 'r', false, $contexto);
+                $json = json_decode(stream_get_contents($flujo));
+                fclose($flujo);
+                $headers = array('Numero de combi', 'Placas', 'Latitud', 'Longitud', 'Fecha/Hora');
+                printPDF($headers, $json->datos);
+            }
+            break;
+        case LOGOUT_USER:
+            session_destroy();
+            session_abort();
+            header('Location: http://localhost/mvc/admin.combis.com/login');
             break;
         default:
             retornar_vista($event);
     }
 }
+
+function printPDF($headers, $body){
+    $pdf = new PDF();
+    $pdf->setReportTitle('Reporte de combis');
+    $pdf->AliasNbPages();
+    $pdf->AddPage('L', 'Letter');
+    $pdf->TablaColores($headers, $body, array(0,255,0), array(200,255,200));
+    $pdf->Output('I', 'Reporte usuarios', false);
+}
+
 function set_obj()
 {
     $obj = new Usuario();
@@ -70,6 +110,9 @@ function helper_user_data()
 {
     $user_data = array();
     if ($_POST) {
+        if (array_key_exists('TipoUsuario', $_POST)) {
+            $user_data['TipoUsuario'] = $_POST['TipoUsuario'];
+        }
         if (array_key_exists('Id', $_POST)) {
             $user_data['Id'] = $_POST['Id'];
         }
@@ -109,6 +152,9 @@ function helper_user_data()
         if (array_key_exists('Contrasena', $_POST)) {
             $user_data['Contrasena'] = $_POST['Contrasena'];
         }
+        if (array_key_exists('Print', $_POST)) {
+            $user_data['Print'] = $_POST['Print'];
+        }
     } else if ($_GET) {
         if (array_key_exists('Correo', $_GET)) {
             $user_data['Correo'] = $_GET['Correo'];
@@ -116,5 +162,10 @@ function helper_user_data()
     }
     return $user_data;
 }
-handler();
+
+if(isset($_SESSION['Usuario'])){
+    handler();
+}else{
+    header('Location: http://localhost/mvc/admin.combis.com/login');
+}
 ?>

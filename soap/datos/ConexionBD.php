@@ -22,6 +22,7 @@ class Db
 	public function insert($datosUsuario)
 	{
         $datosUsuario = json_decode($datosUsuario);
+        $tipoUsuario = $datosUsuario->TipoUsuario != null ? $datosUsuario->TipoUsuario : 0;
         $nombre = $datosUsuario->Nombre;
         $apellido1 = $datosUsuario->PrimerApellido;
         $apellido2 = $datosUsuario->SegundoApellido;
@@ -37,8 +38,8 @@ class Db
         $numCasa = $datosUsuario->NumeroDomicilio;
         $numAfiliado = $datosUsuario->NumeroAfiliado;
 
-		$sqlIn = "INSERT INTO Usuario  (Nombre, Primer_Apellido, Segundo_Apellido, Correo, Contrasena, Fecha_Nacimiento, Estado, Localidad, Colonia, Calle, Numero_Domicilio, Numero_Afiliado, ClaveApi) 
-        VALUES('$nombre','$apellido1','$apellido2', '$correo', '$contrasenaEncriptada', '$fechaNac', '$estado', '$localidad', '$colonia', '$calle', '$numCasa', '$numAfiliado', '$claveApi')";
+		$sqlIn = "INSERT INTO Usuario  (Tipo_Usuario, Nombre, Primer_Apellido, Segundo_Apellido, Correo, Contrasena, Fecha_Nacimiento, Estado, Localidad, Colonia, Calle, Numero_Domicilio, Numero_Afiliado, ClaveApi) 
+        VALUES($tipoUsuario, '$nombre','$apellido1','$apellido2', '$correo', '$contrasenaEncriptada', '$fechaNac', '$estado', '$localidad', '$colonia', '$calle', '$numCasa', '$numAfiliado', '$claveApi')";
 
 		$insert = mysqli_query($this->mysql, $sqlIn);
 
@@ -86,7 +87,7 @@ class Db
                 return ["estado" => 0, "usuario" => "null"];
             }
         } else {
-            return ["estado" => 0, "mensaje" => "Datos incorrectos"];
+            return ["estado" => 0, "usuario" => 'null'];
         }
     }
 
@@ -97,8 +98,8 @@ class Db
         $nombre = $datosUsuario->Nombre;
         $apellido1 = $datosUsuario->PrimerApellido;
         $apellido2 = $datosUsuario->SegundoApellido;
-        $contrasena = $datosUsuario->Contrasena;
-        $contrasenaEncriptada = self::encriptarContrasena($contrasena);
+        // $contrasena = $datosUsuario->Contrasena;
+        // $contrasenaEncriptada = self::encriptarContrasena($contrasena);
         $correo = $datosUsuario->Correo;
         $fechaNac = $datosUsuario->FechaNacimiento;
         $estado = $datosUsuario->Estado;
@@ -108,7 +109,7 @@ class Db
         $numCasa = $datosUsuario->NumeroDomicilio;
         $numAfiliado = $datosUsuario->NumeroAfiliado;
 
-		$sql = "UPDATE Usuario SET Nombre='$nombre', Primer_Apellido='$apellido1', Segundo_Apellido='$apellido2', Correo='$correo', Contrasena='$contrasenaEncriptada', Fecha_Nacimiento='$fechaNac',
+		$sql = "UPDATE Usuario SET Nombre='$nombre', Primer_Apellido='$apellido1', Segundo_Apellido='$apellido2', Correo='$correo', Fecha_Nacimiento='$fechaNac',
                 Estado='$estado', Localidad='$localidad', Colonia='$colonia', Calle='$calle', Numero_Domicilio='$numCasa', Numero_Afiliado='$numAfiliado' WHERE ID_Usuario=$id";
 		$update = mysqli_query($this->mysql, $sql);
 
@@ -145,17 +146,42 @@ class Db
 
 	public function getAll()
 	{
-		$sql = "SELECT * FROM articulos;";
+		$sql = "SELECT * FROM Usuario;";
 		$q = mysqli_query($this->mysql, $sql);
 		$result = array();
 		while ($row = mysqli_fetch_array($q)) {
 			$result[] = array(
-				'id' => $row['id'],
-				'CveArt' => $row['CveArt'],
-				'Descripcion' => $row['Descripcion'],
-				'Precio' => $row['Precio'],
-				'IVA' => $row['IVA'],
-				'Descuento' => $row['Descuento']
+				'Id' => $row['ID_Usuario'],
+				'Nombre' => $row['Nombre'],
+				'PrimerApellido' => $row['Primer_Apellido'],
+				'SegundoApellido' => $row['Segundo_Apellido'],
+				'Correo' => $row['Correo'],
+				'FechaNacimiento' => $row['Fecha_Nacimiento'],
+				'Estado' => $row['Estado'],
+				'Localidad' => $row['Localidad'],
+				'Colonia' => $row['Colonia'],
+				'Calle' => $row['Calle'],
+				'NumeroDomicilio' => $row['Numero_Domicilio'],
+				'NumeroAfiliado' => $row['Numero_Afiliado']
+			);
+		}
+		mysqli_close($this->mysql);
+		return $result;
+	}
+
+	public function getUbicacionCombis()
+	{
+		$sql = "select c.Numero_Combi, c.Placas, u.Latitud, u.Longitud, u.Hora
+        from combi as c inner join Ubicacion as u on c.ID_Combi = u.ID_Combi;";
+		$q = mysqli_query($this->mysql, $sql);
+		$result = array();
+		while ($row = mysqli_fetch_array($q)) {
+			$result[] = array(
+				'Numero' => $row['Numero_Combi'],
+				'Placas' => $row['Placas'],
+				'Latitud' => $row['Latitud'],
+				'Longitud' => $row['Longitud'],
+				'Hora' => $row['Hora']
 			);
 		}
 		mysqli_close($this->mysql);
@@ -164,7 +190,7 @@ class Db
 
 	public function getById($id)
 	{
-		$sql = "SELECT * FROM articulos WHERE id=$id";
+		$sql = "SELECT * FROM Usuario WHERE id=$id";
 
 		$q = mysqli_query($this->mysql, $sql);
 
@@ -173,16 +199,35 @@ class Db
 		while ($row = mysqli_fetch_array($q)) {
 
 			$result[] = array(
-				'id' => $row['id'],
-				'CveArt' => $row['CveArt'],
-				'Descripcion' => $row['Descripcion'],
-				'Precio' => $row['Precio'],
-				'IVA' => $row['IVA'],
-				'Descuento' => $row['Descuento'],
+				'Id' => $row['ID_Usuario'],
+				'Nombre' => $row['Nombre'],
+				'PrimerApellido' => $row['Primer_Apellido'],
+				'SegundoApellido' => $row['Segundo_Apellido'],
+				'Correo' => $row['Correo'],
+				'FechaNacimiento' => $row['Fecha_Nacimiento'],
+				'Estado' => $row['Estado'],
+				'Localidad' => $row['Localidad'],
+				'Colonia' => $row['Colonia'],
+				'Calle' => $row['Calle'],
+				'NumeroDomicilio' => $row['Numero_Domicilio'],
+				'NumeroAfiliado' => $row['Numero_Afiliado']
 			);
 		}
 		mysqli_close($this->mysql);
 		return $result[0];
+    }
+
+	public function getByEmail($datos)
+	{
+        $datos = json_decode($datos);
+        $email = $datos->Correo;
+		$sql = "SELECT ID_Usuario as Id, Nombre, Primer_Apellido as PrimerApellido, Segundo_Apellido as SegundoApellido, Correo, Fecha_Nacimiento as FechaNacimiento, Estado, Localidad, Colonia, Calle, 
+        Numero_Domicilio as NumeroDomicilio, Numero_Afiliado as NumeroAfiliado, ClaveApi FROM Usuario WHERE Correo='$email'";
+		$q = mysqli_query($this->mysql, $sql);
+		$result = array();
+        $result= mysqli_fetch_assoc($q);
+		mysqli_close($this->mysql);
+		return $result;
     }
 
     private function encriptarContrasena($contrasenaPlana) {

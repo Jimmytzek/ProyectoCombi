@@ -31,6 +31,15 @@ class usuarios
     const ESTADO_URL_INCORRECTA = 6;
     const ESTADO_FALLA_DESCONOCIDA = 7;
     const ESTADO_PARAMETROS_INCORRECTOS = 8;
+    
+    public static function get($peticion)
+    {
+        if ($peticion[0] == 'ubicacioncombis') {
+            return self::getUbicacionCombis();
+        } else {
+            throw new ExcepcionApi(self::ESTADO_URL_INCORRECTA, "Url mal formada", 400);
+        }
+    }
 
     public static function post($peticion)
     {
@@ -59,29 +68,15 @@ class usuarios
         }
     }
 
-    public static function get($peticion){
-        if($peticion[0] == 'verUsuarios'){
-            return self::obtenerUsuarios();
-        }else {
-            throw new ExcepcionApi(self::ESTADO_URL_INCORRECTA, "Url mal formada", 400);
-        }
-    }
-
-
-    private function obtenerUsuarios()
+    private function getUbicacionCombis()
     {
-        $comando = "SELECT *" .
-            " FROM " . self::NOMBRE_TABLA ;
-
-        $sentencia = ConexionBD::obtenerInstancia()->obtenerBD()->prepare($comando);
-
-        if ($sentencia->execute()) {
-            $resultado = $sentencia->fetchAll(PDO::FETCH_ASSOC);
-            return $resultado;
-        } else
-            return null;
+        $resultado = self::obtenerUbicacionCombis();
+        return
+            [
+                "estado" => self::ESTADO_CREACION_EXITOSA,
+                "datos" => $resultado
+            ];
     }
-
 
     /**
      * Crea un nuevo usuario en la base de datos
@@ -412,6 +407,19 @@ class usuarios
             return null;
     }
 
+    private function obtenerUbicacionCombis()
+    {
+        $comando = "select c.Numero_Combi, c.Placas, u.Latitud, u.Longitud, u.Hora from combi as c inner join Ubicacion as u on c.ID_Combi = u.ID_Combi";
+
+        $sentencia = ConexionBD::obtenerInstancia()->obtenerBD()->prepare($comando);
+
+        if ($sentencia->execute()) {
+            $resultado = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+            return $resultado;
+        } else
+            return null;
+    }
+
     private function update($datosUsuario){
         $id = $datosUsuario->Id;
         $nombre = $datosUsuario->Nombre;
@@ -477,7 +485,7 @@ class usuarios
     }
 
     private function deleteUser($datosUsuario){
-        $userId = $datosUsuario->ID_Usuario;
+        $userId = $datosUsuario->Id;
         try {
 
             $pdo = ConexionBD::obtenerInstancia()->obtenerBD();

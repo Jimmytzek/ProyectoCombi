@@ -76,5 +76,9 @@ function helper_user_data()
     }
     return $user_data;
 }
-handler();
+if(isset($_SESSION['Usuario'])){
+    handler();
+}else{
+    header('Location: http://localhost/mvc/admin.combis.com/login');
+}
 ?>
