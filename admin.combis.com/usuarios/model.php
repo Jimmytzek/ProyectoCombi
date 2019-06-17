@@ -32,5 +32,9 @@
         public function update($datos){
             return $this->instance->__soapCall("update",array($datos));
         }
+
+        public function getUbicacionCombis(){
+            return $this->instance->__soapCall("getUbicacionCombis",array());
+        }
     }
 ?>

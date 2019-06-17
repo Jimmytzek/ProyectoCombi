@@ -1,0 +1,16 @@
+<h3>Ingrese sus datos para iniciar sesión</h3>
+<p style="color:red;font-size: 1.2rem;">{mensaje}</p>
+<form id="alta_usuario" action="{SET}" method="POST">
+    <label>Correo</label>
+    <input class="form-control" type="email" name="Correo" id="email">
+    <br>
+    <label>Contraseña</label>
+    <input class="form-control" type="password" name="Contrasena" id="clave">
+    <br>
+    <button type="submit" class="btn btn-primary col-md-4 col-md-offset-4">Entrar</button>
+</form>
+<br><br>
+<br>
+<form id="alta_usuario" action="{FORGOT}" method="POST">
+    <button type="submit" class="btn btn-secondary col-md-4 col-md-offset-4">Olvidé mi contraseña</button>
+</form>

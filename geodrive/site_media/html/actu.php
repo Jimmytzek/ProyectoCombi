@@ -50,7 +50,11 @@ function verCombis(){
                         cell11.innerHTML = '<p name="nDomicilio" class="non-margin">'+item.Correo+'</p>';
                         
                         // cell12.innerHTML = '<p name="nDomicilio" class="non-margin">'+item.ID_Usuario+'</p>';
+<<<<<<< HEAD
                         cell12.innerHTML= '<button id="fa-edit">Editar </button>'; 
+=======
+                        cell12.innerHTML= '<button id="fa-edit">Actualizar </button>'; 
+>>>>>>> 466ffbac9b61bb30b6f80c5ba5524b8f71b20d22
                         // cell12.innerHTML = '<p name="nDomicilio" class="non-margin">'+item.ID_Usuario+'</p>';
                 
                         

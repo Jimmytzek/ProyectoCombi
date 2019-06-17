@@ -134,7 +134,11 @@ include 'actu.php'; ?>
     </div>  -->
  
     <div  class="container-login100-form-btn">
+<<<<<<< HEAD
     <button type="button" class="btn btn-info btn-block my-4" onclick="registro()" >Actualizar</button>
+=======
+    <button type="button" class="btn btn-info btn-block my-4" onclick="registro()" >Registrar</button>
+>>>>>>> 466ffbac9b61bb30b6f80c5ba5524b8f71b20d22
     </div>
  
 

@@ -28,7 +28,11 @@ $link = mysqli_connect('localhost','root','','geodrive');
 $pdf = new PDF();
 $pdf->AddPage();
 // First table: output all columns
+<<<<<<< HEAD
 $pdf->Table($link,'SELECT ID_Usuario, Nombre, Primer_Apellido  from usuario ');
+=======
+$pdf->Table($link,'SELECT  usuarioxcombi.ID_UsuarioCombi, combi.ID_Combi, combi.Numero_combi, combi.placas , usuarioxcombi.ID_Combi, usuarioxcombi.Numero_Combi, usuarioxcombi.Placas FROM combi inner join usuarioxcombi on usuarioxcombi.ID_Combi = combi.ID_Combi ');
+>>>>>>> 466ffbac9b61bb30b6f80c5ba5524b8f71b20d22
 
 $prop = array('HeaderColor'=>array(255,150,100),
 			'color1'=>array(210,245,255),

@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" type="text/css" href="/mvc/poo/site_media/css/base_template.css">
+    <link rel="stylesheet" type="text/css" href="/mvc/admin.combis.com/site_media/css/base_template.css">
     <title>ABM de Usuarios: {subtitulo}</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -25,13 +25,14 @@
         <h2>{subtitulo}</h2>
     </div>
     <div id="menu">
-        <a href="/mvc/poo/{VIEW_SET_USER}" title="Nuevo usuario">Agregar usuario</a>
-        <a href="/mvc/poo/{VIEW_GET_USER}" title="Buscar usuario">Buscar/editar
+        <a href="/mvc/admin.combis.com/{VIEW_SET_USER}" title="Nuevo usuario">Agregar usuario</a>
+        <a href="/mvc/admin.combis.com/{VIEW_GET_USER}" title="Buscar usuario">Buscar/editar
             usuario</a>
-        <a href="/mvc/poo/{VIEW_DELETE_USER}" title="Borrar usuario">Borrar
+        <a href="/mvc/admin.combis.com/{VIEW_DELETE_USER}" title="Borrar usuario">Borrar
             usuario</a>
-        <a href="/mvc/poo/{VIEW_REPORT_USER}" title="Reporte de usuario">Reporte de
+        <a href="/mvc/admin.combis.com/{VIEW_REPORT_USER}" title="Reporte de usuario">Reporte de
             usuario</a>
+        <a style="float:right;" href="/mvc/admin.combis.com/{VIEW_LOGOUT_USER}" title="Cerrar sesión">Cerrar sesión</a>
     </div>
     <div id="mensaje">
         {mensaje}
