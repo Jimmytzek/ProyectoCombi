@@ -1,3 +1,13 @@
+<?php
+
+session_start();
+ 
+
+      if (!isset($_SESSION['sesion'])) {
+        header('Location: usuario_login.php');
+      }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,43 +17,18 @@
     <link rel="stylesheet" href="./../css/base_template.css">
     <title>Document</title>
 </head>
-<body>
-
-<?php
-
-session_start();
-
-      if (isset($_SESSION['sesion'])) {
-        header('Location: usuario_login.php');
-        echo $_SESSION['sesion'];
-        exit();
-
-      }
-
-      function cerrar(){
-        session_abort();
-
-      }
-?>
-
+<body> 
+  
 <ul>
   <li><a class="active">Usuarios</a></li>
-  <li><a href="usuario_del.php">Eliminar</a></li>
-  <li><a class="active" href="usuario_reporte.php">reporte</a></li>
-  <li><a class="active" onclick="cerrar()" >cerrar sesion</a></li>
-
+  <li><a href="usuario_del.php">Eliminar usuario</a></li>
+  <li><a class="active" href="usuario_reporte.php">reporte</a></li> 
+  <li ><a class="active" href="usuario_update.php">Actualizar usuario</a></li>
+  <li ><a class="active" href="usuario_singnOut.php">cerrar sesion</a></li>
+ 
+  
+  <!-- href="usuario_singnOut.php" -->
 </ul>
-
-<script>
-
-  function cerrar(){
-
-    var variable="<? echo cerrar() ?>";
-					document.write(variable);
-					window.location="usuario_login.php";
-				}
-
-</script>
 
 <div id="map"></div>
 <script src="./../js/script.js"></script>

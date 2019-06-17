@@ -127,14 +127,14 @@ function registro(){
 
 var from= {
     Nombre: $('#Nombre').val(),
-    PrimerApellido: $('#PrimerApellido').val(),
-    SegundoApellido: $('#SegundoApellido').val(),
-    FechaNacimiento: $('#FechaNacimiento').val(),
+    Primer_Apellido: $('#PrimerApellido').val(),
+    Segundo_Apellido: $('#SegundoApellido').val(),
+    Fecha_Nacimiento: $('#FechaNacimiento').val(),
     Estado: $('#Estado').val(),
     Localidad: $('#Localidad').val(),
     Colonia: $('#Colonia').val(),
     Calle: $('#Calle').val(),
-    NumeroDomicilio: $('#NumeroDomicilio').val(),
+    Numero_Domicilio: $('#NumeroDomicilio').val(),
     Correo: $('#Correo').val(),
     Contrasena: $('#Contrasena').val()
 };
@@ -142,6 +142,9 @@ var from= {
 var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
+                    alert('Usuario Registrado'); 
+ 
+                    window.location="usuario_login.php";
 				}
 			};
 			xhttp.open("POST", "http://localhost/api.combis.com/v1/usuarios/registro", true);
@@ -150,19 +153,19 @@ var xhttp = new XMLHttpRequest();
 
 }
 
-$(document).ready(function() {
-        $('#refresh').click(function() {
-            // Recargo la página
-            location.reload();
-        });
-    });
+// $(document).ready(function() {
+//         $('#refresh').click(function() {
+//             // Recargo la página
+//             location.reload();
+//         });
+//     });
 
 
 </script>
 
 
     <div class="container-login100-form-btn">
-    <button type="button" class="btn btn-primary" onclick="registro()" id="refresh">Registrar</button>
+    <button type="button" class="btn btn-primary" onclick="registro()"  >Registrar</button>
     </div>
 
     </form>

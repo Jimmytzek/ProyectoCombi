@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+if (isset($_SESSION['sesion'])) {
+	header('Location: usuario_index.php');
+  }
+ 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,18 +31,6 @@
 </head>
 <body>
 	
-<?php
-
-function redi(){
- session_start();
- $_SESSION['sesion'] = '1'; 
-}
-
-echo $_SESSION['sesion']
-
-
-?>
-
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
@@ -64,7 +60,7 @@ echo $_SESSION['sesion']
 					</div>
 					
 					<div class="container-login100-form-btn">
-						<button type="button" class="login100-form-btn" onclick="login()">
+						<button type="button" class="login100-form-btn" onclick="login()" id="log">
 							Login
 						</button>
 					</div>
@@ -115,15 +111,18 @@ echo $_SESSION['sesion']
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
-					var variable="<? echo redi() ?>";
-					document.write(variable);
+					$('#log').load("usuario_validar.php"); 
 					window.location="usuario_index.php";
-				}
+				} 
 			};
 			xhttp.open("POST", "http://localhost/api.combis.com/v1/usuarios/login", true);
 			xhttp.send(JSON.stringify(datos));
+			
+			
+ 
 		}
-
+		
+		
 
 	</script>
 <!--===============================================================================================-->
